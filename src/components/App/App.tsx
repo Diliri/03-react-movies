@@ -7,6 +7,7 @@ import SearchBar from "../SearchBar/SearchBar";
 import MovieGrid from "../MovieGrid/MovieGrid";
 import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import MovieModal from '../MovieModal/MovieModal';
 
 // Імпортуємо функцію запиту та тип фільму
 import { fetchMovies } from "../../services/movieService";
@@ -17,6 +18,7 @@ export default function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
   // функція обробки пошуку
   const handleSearch = async (topic: string) => {
@@ -42,22 +44,41 @@ export default function App() {
     }
   };
 
-  return (
+      // Функція, яку викликаємо при кліку на фільм у сітці
+    const openModal = (movie: Movie): void => {
+        setSelectedMovie(movie);
+    };
+
+    // Функція для закриття модалки
+    const closeModal = (): void => {
+        setSelectedMovie(null);
+    };
+
+return (
     <>
       {/* Передаємо функцію в SearchBar */}
       <SearchBar onSubmit={handleSearch} />
 
-      {/* Рендер компонентів*/}
+      {/* Рендер компонентів */}
       {isLoading && <Loader />}
       
       {error && <ErrorMessage />}
       
+      {/* MovieGrid із перевіркою та openModal */}
       {movies.length > 0 && !isLoading && (
-        <MovieGrid movies={movies} onSelect={(movie) => console.log(movie)} />
+        <MovieGrid movies={movies} onSelect={openModal} />
       )}
 
       {/* Компонент для спливаючих сповіщень toast */}
       <Toaster position="top-right" />
+
+      {/* Модальне вікно (відкривається, коли selectedMovie не null) */}
+      {selectedMovie && (
+        <MovieModal 
+          movie={selectedMovie} 
+          onClose={closeModal} 
+        />
+      )}
     </>
   );
 }

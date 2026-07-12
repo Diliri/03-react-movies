@@ -21,7 +21,7 @@ const MovieModal = ({ movie, onClose }: MovieModalProps) => {
     };
 
     window.addEventListener('keydown', handleKeyDown);
-
+    
     // Очищення при розмонтуванні (відновлюємо скрол, знімаємо слухача)
     return () => {
       document.body.style.overflow = '';
