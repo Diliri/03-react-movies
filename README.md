@@ -1,77 +1,70 @@
-# React + TypeScript + Vite
+# 🎬 React Movies App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Цей вебдодаток — інтерактивний пошуковик фільмів, створений на базі бібліотеки **React** та **TypeScript** у рамках навчання в GoIT. Додаток інтегрується з третім поколінням API сервісу **The Movie Database (TMDB)** для отримання актуальних даних про кінематограф.
 
-Currently, two official plugins are available:
+🚀 **Живий лінк на проєкт:** [03-react-movies](https://03-react-movies-sable-kappa.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🔍 Основний функціонал (Features)
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- **Динамічний пошук:** швидкий пошук кінострічок за ключовими словами чи назвою через інтерактивний рядок пошуку.
+- **Галерея результатів:** відображення знайдених фільмів у вигляді адаптивної сітки (картки містять постери, назви та глядацькі рейтинги).
+- **Детальна інформація:** клік по картці відкриває модальне вікно з детальним описом (`overview`), датою релізу, середньою оцінкою та великим банером.
+- **Валідація та помилки:** додаток коректно обробляє ситуації порожнього запиту (через спливаючі сповіщення `react-hot-toast`), відсутності результатів або збою мережі.
+- **Зручність інтерфейсу:** під час завантаження відображається лоадер, а при відкритті модалки блокується фоновий скрол сторінки.
 
-Note: This will impact Vite dev & build performances.
+---
 
-## Expanding the ESLint configuration
+## 🛠 Технологічний стек (Tech Stack)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Frontend:** React (Функціональні компоненти + Hooks: `useState`, `useEffect`)
+- **Мова програмування:** TypeScript (сувора типізація інтерфейсів API та компонентів)
+- **Збирач проєкту:** Vite
+- **Стилізація:** CSS Modules, `modern-normalize`
+- **HTTP-клієнт:** Axios (із налаштуванням глобального `instance` та Bearer авторизації)
+- **Деплой:** Vercel
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 📂 Структура проєкту (Key Architecture)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Проєкт побудований за модульним принципом рознесення компонентів у власні папки поруч зі стилями:
 
+- `src/components/` — ізольовані React-компоненти (`SearchBar`, `MovieGrid`, `MovieModal`, `Loader`, `ErrorMessage`).
+- `src/services/` — сервіс `movieService.ts` для ізоляції логіки запитів до API TMDB.
+- `src/types/` — файли типізації даних (інтерфейси відповіді сервера та моделі фільму).
+
+---
+
+## 🚀 Локальний запуск (Local Development)
+
+Щоб запустити проєкт локально на комп'ютері, виконайте наступні кроки:
+
+1. Клонуйте репозиторій:
+   ```bash
+   git clone [https://github.com/Diliri/03-react-movies.git](https://github.com/Diliri/03-react-movies.git)
+   Перейдіть у папку проєкту:
+   ```
+
+```bash
+cd 03-react-movies
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Встановіть залежності:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
 ```
+
+Створіть файл .env у корені проєкту та додайте свій токен доступу:
+
+VITE_TMDB_TOKEN=ваш*секретний*Bearer\*токен
+
+Запустіть сервер для розробки:
+
+```bash
+npm run dev
+```
+
+Producer: Diana Muzhylivska
